@@ -60,16 +60,8 @@ from finance import *
 # ## Example: Creating New Leases
 # The below code creates 3 new lease objects that will be used throughout the rest of the notebook.
 
-lease1 = newLease(
- start_date = date(2018,6,1), 
- end_date = date(2030,5,31), 
- tenant_name = "Cavendish Kinetics",
- suite = "100",
- rental_rate_psf = 22.00,
- occupied_sf = 3481.00,
- expense_type = "BASE YEAR")
 
-lease2 = newLease(
+lease1 = newLease(
  start_date = date(2018,9,1), 
  end_date = date(2030,8,31), 
  tenant_name = "North Park Dental", 
@@ -78,7 +70,7 @@ lease2 = newLease(
  occupied_sf = 1235.00,
  expense_type = "NNN")
 
-lease3 = newLease(
+lease2 = newLease(
  start_date = date(2018,5,1), 
  end_date = date(2030,6,30), 
  tenant_name = "International Tutoring", 
@@ -87,9 +79,9 @@ lease3 = newLease(
  occupied_sf = 2190.00,
  expense_type = "NNN")
 
-leaseArray = [lease1.schedule, lease2.schedule, lease3.schedule]
-
-pd.DataFrame([lease1.stats, lease2.stats, lease3.stats])
+#%% [markdown]
+#A **_newLeaseSchedule_** can be used when a lease has yearly increases 
+# (currently recalculates rent 1/1 of every year)
 
 leaseSchedule = newLeaseSchedule(
  start_date = date(2018,6,15), 
@@ -101,14 +93,17 @@ leaseSchedule = newLeaseSchedule(
  expense_type = "BASE YEAR",
  percent_increase = 0.03)
 
+leaseArray = [lease1.schedule, lease2.schedule, leaseSchedule.schedule]
+
+pd.DataFrame([lease1.stats, lease2.stats, leaseSchedule.stats])
 
 ###Export Lease Schedule to csv (keep for reference)
-leaseSchedule.to_csv('../Outputs/schedueleee.csv')
+leaseSchedule.schedule.to_csv('../Outputs/schedueleee.csv')
 
 
 #%% [markdown]
 # ### Example: Creating a New Rent Roll Object
-# The below code creates a rent roll from the 3 new lease objects created in the previous section. Examples of the full, monthly, and yearly DataFrames are shown.
+# The below code creates a rent roll from the 2 newLease objects and 1 newLeaseSchedule object created in the previous section. Examples of the full, monthly, and yearly DataFrames are shown.
 
 #%%
 sampleRentRoll = newRentRoll(leaseArray)
@@ -118,8 +113,8 @@ sampleRentRoll.full.head()
 #%% [markdown]
 # # Expenses
 # ---
-# ## Example: Expense Calculating
-# First create an expense table by adding new expenses
+# ## Tenant Expense Calculating
+# First create an expense table by adding new expenses using **_newExpense_**
 #%% 
 #If you dont pass it an addTo dataframe it will create a new data frame with your expense
 expenses = newExpense("Tax", 2300, 2019)
@@ -127,8 +122,10 @@ expenses = newExpense("Tax", 2300, 2019)
 expenses = newExpense("Insurnce", 2300, 2019, addTo=expenses)
 expenseAmount = expenses['Yearly Expense'].sum()
 
+#%% [markdown]
+# Then you can calculate each tenants estimated expenses given a single years expenses using calculateExpenses
 rent_roll_expenses = calculateExpenses(sampleRentRoll,expenseAmount,45000)
-rent_roll_expenses
+rent_roll_expenses.head()
 
 
 #%% [markdown]
@@ -166,9 +163,7 @@ rent_roll_expenses
 # 
 # *amortize* returns:
 # * **schedule**: Amortization schedule as an Ordered Dictionary
-# 
 
-# ### Example: Creating an Amortization Schedule
 
 #%%
 amort1 = amortization_table(700000, .04, 30, addl_principal=200, start_date=date(2016, 1,1))
@@ -177,4 +172,3 @@ amort3 = amortization_table(100000, .05, 30, addl_principal=200, start_date=date
 amort4 = amortization_table(100000, .04, 15, addl_principal=0, start_date=date(2016,1,1))
 
 pd.DataFrame([amort1.stats, amort2.stats, amort3.stats, amort4.stats])
-
