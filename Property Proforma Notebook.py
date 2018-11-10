@@ -406,6 +406,149 @@ pd.DataFrame([amort1.stats, amort2.stats, amort3.stats, amort4.stats])
 
 
 #%%
-amort4.schedule.head()
+#amort4.schedule.head()
 
 
+
+
+#%%
+original_rent = (12661.87 / 6753) * 12
+
+prosperityOriginal = newLease(start_date = date(2014,1,1), 
+                    end_date = date(2014,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = original_rent,
+                    occupied_sf = 6753.00,
+                    expense_type = "NNN")
+
+increase1 = original_rent * 1.03
+
+prosperity1 = newLease(start_date = date(2015,1,1), 
+                    end_date = date(2015,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase1,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase2 = increase1 * 1.02
+
+prosperity2 = newLease(start_date = date(2016,1,1), 
+                    end_date = date(2016,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase2,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase3 = increase2 * 1.02
+
+prosperity3 = newLease(start_date = date(2017,1,1), 
+                    end_date = date(2017,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase3,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase4 = increase3 * 1.02
+
+prosperity4 = newLease(start_date = date(2018,1,1), 
+                    end_date = date(2018,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase4,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+###############
+increase5 = increase4 * 1.02
+
+prosperity5 = newLease(start_date = date(2019,1,1), 
+                    end_date = date(2019,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase5,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase6 = increase5 * 1.02
+
+prosperity6 = newLease(start_date = date(2020,1,1), 
+                    end_date = date(2020,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase6,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase7 = increase6 * 1.02
+
+prosperity7 = newLease(start_date = date(2021,1,1), 
+                    end_date = date(2021,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase7,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase8 = increase7 * 1.02
+
+prosperity8 = newLease(start_date = date(2022,1,1), 
+                    end_date = date(2022,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase8,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase9 = increase8 * 1.02
+
+prosperity9 = newLease(start_date = date(2023,1,1), 
+                    end_date = date(2023,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase9,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase10 = increase9 * 1.02
+
+prosperity10 = newLease(start_date = date(2024,1,1), 
+                    end_date = date(2024,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase10,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+
+
+
+
+
+
+######
+prosperity_rent = [prosperityOriginal.schedule, 
+                    prosperity1.schedule, 
+                    prosperity2.schedule,
+                    prosperity3.schedule,
+                    prosperity4.schedule,
+                    prosperity5.schedule,
+                    prosperity6.schedule,
+                    prosperity7.schedule,
+                    prosperity8.schedule,
+                    prosperity9.schedule,
+                    prosperity10.schedule,]
+
+prosperityRentRoll = newRentRoll(prosperity_rent)
+
+prosperityRentRoll.yearly.to_csv('yearly_prosperity_rent.csv')
+
+
+#%% [markdown]
+# were gonna need a function to create rent schedule given a percentage increase and a starting year, should probably return a rent roll object and a table similar to the one i made for bill
+
+
+#%%
