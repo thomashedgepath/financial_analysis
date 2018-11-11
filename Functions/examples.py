@@ -192,10 +192,9 @@ leaseSchedule = newLeaseSchedule(
 prosperityRentRollFull = newRentRoll([leaseSchedule.schedule])
 prosperityRentRoll = prosperityRentRollFull.yearly
 
-prosperityRentRoll['monthly'] = prosperityRentRoll.yearsRent / 12
-prosperityRentRoll['monthly'] = (np.ceil(prosperityRentRoll['monthly'] * 100))/100
-prosperityRentRoll['psf'] = prosperityRentRoll.yearsRent / prosperityRentRollFull.full.occupiedSF[0]
-prosperityRentRoll['psf'] = (np.ceil(prosperityRentRoll['psf'] * 100))/100
+prosperityRentRoll['monthly'] = round(prosperityRentRoll.yearsRent / 12,2)
+prosperityRentRoll['psf'] = round(prosperityRentRoll.yearsRent / prosperityRentRollFull.full.occupiedSF[0],2)
+
 
 prosperityRentRoll
 #%%
