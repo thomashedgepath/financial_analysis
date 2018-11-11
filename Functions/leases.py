@@ -45,7 +45,7 @@ def newLease(start_date,end_date,tenant_name,suite,rental_rate_psf,occupied_sf,e
 
     #calculates the rent for a partial month lease
     schedule['collectedRent'] = (schedule['fullMonthRent'] / pd.to_datetime(schedule.index).day) * schedule['partialDays']
-    
+    schedule['collectedRent'] = (np.ceil(schedule['collectedRent'] * 100))/100
     
     #puts the full month rent amount into the schedule of collected rent
     
@@ -126,6 +126,7 @@ def newLeaseSchedule(start_date, end_date, tenant_name, suite, start_rental_rate
     #set output to match the newLease output
     months_in_lease = int(np.around((pd.to_datetime(end_date) - pd.to_datetime(start_date))/np.timedelta64(1, 'M')))
     avg_rental_rate = ((tenantRentSchedule['fullMonthRent'].mean()/ occupied_sf)*12)
+    avg_rental_rate = (np.ceil(avg_rental_rate * 100))/100
 
     stats = pd.Series([start_date, 
                        end_date, 
@@ -162,6 +163,7 @@ def newRentRoll(leaseArray):
     ####
     monthlyRentSchedule = pd.DataFrame()
     monthlyRentSchedule['monthsRent'] = propertyRentSchedule.groupby(propertyRentSchedule.index)['collectedRent'].sum()
+    monthlyRentSchedule['monthsRent'] = (np.ceil(monthlyRentSchedule['monthsRent'] * 100))/100
     monthlyRentSchedule['leaseCount'] = propertyRentSchedule.index.value_counts()
     monthlyRentSchedule['year'] = pd.to_datetime(monthlyRentSchedule.index).year
 
@@ -172,7 +174,7 @@ def newRentRoll(leaseArray):
     ####
     yearlyRentSchedule = pd.DataFrame()
     yearlyRentSchedule['yearsRent'] = monthlyRentSchedule.groupby(monthlyRentSchedule['year'])['monthsRent'].sum()
-    yearlyRentSchedule
+    yearlyRentSchedule['yearsRent'] = (np.ceil(yearlyRentSchedule['yearsRent'] * 100))/100
     
     #creates a named tuple so the three versions can be accessed easily
     

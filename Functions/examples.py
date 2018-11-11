@@ -172,3 +172,33 @@ amort3 = amortization_table(100000, .05, 30, addl_principal=200, start_date=date
 amort4 = amortization_table(100000, .04, 15, addl_principal=0, start_date=date(2016,1,1))
 
 pd.DataFrame([amort1.stats, amort2.stats, amort3.stats, amort4.stats])
+
+
+
+#%%
+
+leaseSchedule = newLeaseSchedule(
+ start_date = date(2019,1,1), 
+ end_date = date(2024,12,31), 
+ tenant_name = "Prosperity Bank",
+ suite = "100",
+ start_rental_rate_psf = 25.00,
+ occupied_sf = 6623.00,
+ expense_type = "NNN",
+ percent_increase = 0.02)
+
+
+
+prosperityRentRollFull = newRentRoll([leaseSchedule.schedule])
+prosperityRentRoll = prosperityRentRollFull.yearly
+
+prosperityRentRoll['monthly'] = prosperityRentRoll.yearsRent / 12
+prosperityRentRoll['monthly'] = (np.ceil(prosperityRentRoll['monthly'] * 100))/100
+prosperityRentRoll['psf'] = prosperityRentRoll.yearsRent / prosperityRentRollFull.full.occupiedSF[0]
+prosperityRentRoll['psf'] = (np.ceil(prosperityRentRoll['psf'] * 100))/100
+
+prosperityRentRoll
+#%%
+
+
+#%%
