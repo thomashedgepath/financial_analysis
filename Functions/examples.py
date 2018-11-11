@@ -176,28 +176,50 @@ pd.DataFrame([amort1.stats, amort2.stats, amort3.stats, amort4.stats])
 
 
 #%%
+original_rent = (12661.87 / 6753) * 12
+
+prosperityOriginal = newLease(start_date = date(2014,1,1), 
+                    end_date = date(2014,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = original_rent,
+                    occupied_sf = 6753.00,
+                    expense_type = "NNN")
+
+increase1 = original_rent * 1.03
+
+prosperity1 = newLease(start_date = date(2015,1,1), 
+                    end_date = date(2015,12,31), 
+                    tenant_name = "Prosperity Original", 
+                    suite = "100",
+                    rental_rate_psf = increase1,
+                    occupied_sf = 6623.00,
+                    expense_type = "NNN")
+
+increase2 = increase1 * 1.02
+
 
 leaseSchedule = newLeaseSchedule(
- start_date = date(2019,1,1), 
+ start_date = date(2016,1,1), 
  end_date = date(2024,12,31), 
  tenant_name = "Prosperity Bank",
  suite = "100",
- start_rental_rate_psf = 25.00,
+ start_rental_rate_psf = increase2,
  occupied_sf = 6623.00,
  expense_type = "NNN",
  percent_increase = 0.02)
 
 
-
-prosperityRentRollFull = newRentRoll([leaseSchedule.schedule])
+###need to turn this into a function, so the occ_sf can be done on the entire table.
+prosperityRentRollFull = newRentRoll([leaseSchedule.schedule, prosperityOriginal.schedule,prosperity1.schedule])
 prosperityRentRoll = prosperityRentRollFull.yearly
 
 prosperityRentRoll['monthly'] = round(prosperityRentRoll.yearsRent / 12,2)
-prosperityRentRoll['psf'] = round(prosperityRentRoll.yearsRent / prosperityRentRollFull.full.occupiedSF[0],2)
+prosperityRentRoll['psf'] = round(prosperityRentRoll.yearsRent / prosperityRentRollFull.full.occupiedSF,2)
 
 
 prosperityRentRoll
 #%%
-
+prosperityRentRollFull.full.to_csv('../Outputs/schedueleee.csv')
 
 #%%
