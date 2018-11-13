@@ -27,14 +27,26 @@ When finished this notebook will contain structures for:
 4. expense functions:
     * commisions
     * irr
-    * 
+    * most finance arent that complicated
 
 5. construction costs
+    * create an expense table like for expenses.
+    * create a bell curve model for estimating construction financing
+    * maybe build a table of Retail, Industrial, MF construction cost ranges
+    * include hard and soft costs
 
 6. pro forma output 
     * just set up a seperate file that holds all variables and create a function that turns it into a spreadsheet, figure out the best way to show a scenario on a single sheet. May need two seperate templates for construction/non construction
     * maybe just do this in a notebook? then a spreadsheet? then figure out how to assemble into an HTML layout
 
 7. re-tenanting
+    * look at table, when a lease ends account for retenant period, then increase rent and start a new lease
+    * add to table and return the table
 
-8. 
+8. lease return tuple?
+    * should lease objects and rent roll objects return a tuple?
+    * might make more sense to remove the stats and different rent roll versions to clean up code and Make seperate functions that return similar summarized tables
+
+8. Make seperate CLI apps to run through a proforma and output a spreadsheet. Will need one for Existing Buildings and one for Construction Projects.
+
+9. Once the flow is completed it should be easier to move to A Web based version
